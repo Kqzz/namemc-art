@@ -74,8 +74,14 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	faces, _ := getFaceImages(originalImage)
-	skins, _ := placeFacesOnSkin(faces)
+	faces, err := getFaceImages(originalImage)
+	if err != nil {
+		log.Fatal(err)
+	}
+	skins, err := placeFacesOnSkin(faces)
+	if err != nil {
+		log.Fatal(err)
+	}
 	err = saveSkins(skins)
 	if err != nil {
 		log.Fatal(err)
