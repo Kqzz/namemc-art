@@ -2,13 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/disintegration/imaging"
 	"image"
 	"image/png"
 	_ "image/png"
 	"log"
 	"os"
 
+	"github.com/disintegration/imaging"
 	"github.com/oliamb/cutter"
 )
 
@@ -27,10 +27,9 @@ func getFaceImages(i image.Image) ([]image.Image, error) {
 	for y := 0; y < 3; y++ {
 		for x := 0; x < 9; x++ {
 			croppedImage, err := cutter.Crop(i, cutter.Config{
-				Width:   8,
-				Height:  8,
-				//Options: cutter.,
-				Anchor:  image.Point{X: x * 8, Y: y * 8},
+				Width:  8,
+				Height: 8,
+				Anchor: image.Point{X: x * 8, Y: y * 8},
 			})
 			if err != nil {
 				return nil, err
