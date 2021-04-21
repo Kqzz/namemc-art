@@ -1,15 +1,17 @@
 package main
 
 import (
+	"bufio"
+	"errors"
 	"fmt"
+	"github.com/disintegration/imaging"
+	"github.com/oliamb/cutter"
 	"image"
 	"image/png"
 	_ "image/png"
 	"log"
 	"os"
-
-	"github.com/disintegration/imaging"
-	"github.com/oliamb/cutter"
+	"strings"
 )
 
 func getImageFromFilePath(filePath string) (image.Image, error) {
@@ -68,7 +70,31 @@ func saveSkins(skins []image.Image) error {
 	return nil
 }
 
+func input(msg string) (string, error) {
+	fmt.Printf("%v", msg)
+	scanner := bufio.NewScanner(os.Stdin)
+	for scanner.Scan() {
+		return scanner.Text(), nil
+	}
+
+	if err := scanner.Err(); err != nil {
+		return "", err
+	}
+	return "", errors.New("who knows")
+}
+
 func main() {
+	title := `
+███╗   ██╗ █████╗ ███╗   ███╗███████╗███╗   ███╗ ██████╗    ███████╗██╗  ██╗██╗███╗   ██╗     █████╗ ██████╗ ████████╗
+████╗  ██║██╔══██╗████╗ ████║██╔════╝████╗ ████║██╔════╝    ██╔════╝██║ ██╔╝██║████╗  ██║    ██╔══██╗██╔══██╗╚══██╔══╝
+██╔██╗ ██║███████║██╔████╔██║█████╗  ██╔████╔██║██║         ███████╗█████╔╝ ██║██╔██╗ ██║    ███████║██████╔╝   ██║   
+██║╚██╗██║██╔══██║██║╚██╔╝██║██╔══╝  ██║╚██╔╝██║██║         ╚════██║██╔═██╗ ██║██║╚██╗██║    ██╔══██║██╔══██╗   ██║   
+██║ ╚████║██║  ██║██║ ╚═╝ ██║███████╗██║ ╚═╝ ██║╚██████╗    ███████║██║  ██╗██║██║ ╚████║    ██║  ██║██║  ██║   ██║   
+╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝     ╚═╝╚══════╝╚═╝     ╚═╝ ╚═════╝    ╚══════╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝    ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
+
+`
+	fmt.Print(title)
+	fmt.Println("Generating images...")
 	originalImage, err := getImageFromFilePath("image.png")
 	if err != nil {
 		log.Fatal(err)
@@ -84,5 +110,18 @@ func main() {
 	err = saveSkins(skins)
 	if err != nil {
 		log.Fatal(err)
+	}
+	fmt.Println("Generated :D")
+	toContinue, _ := input("(y/n) Would you like to apply the skins to your account? ")
+	switch strings.ToLower(toContinue) {
+	case "y", "yes":
+		fmt.Println("before applying these skins. make sure you have NO skins on your namemc profile. you can remove them at \"edit profile\" -> \"skins\"\nMake sure you save any important skins")
+		fmt.Println("to apply these skins this program needs your bearer token.\nGuide on getting it: https://kqzz.github.io/mc-bearer-token")
+		bearer, _ := input("Bearer? ")
+		err = applySkins(bearer, skins)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println("DONE! All the skins have been applied to your account.")
 	}
 }
