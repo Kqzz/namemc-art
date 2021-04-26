@@ -54,6 +54,10 @@ func applySkins(bearer string, skins []image.Image) error {
 	for i, j := 0, len(skins)-1; i < j; i, j = i+1, j-1 {
 		skins[i], skins[j] = skins[j], skins[i]
 	}
+	uuid, err := getUuidFromBearer(bearer)
+	if err != nil {
+		handleErr(err)
+	}
 	for i, skin := range skins {
 		params := map[string]string{
 			"variant": "slim",
@@ -66,12 +70,12 @@ func applySkins(bearer string, skins []image.Image) error {
 		request.Header.Set("file", "skin.png;type=image/png")
 		resp, err := client.Do(request)
 		if err != nil {
-			log.Fatal(err)
+			handleErr(err)
 		}
 
 		fmt.Printf("skin #%v | %v\n", i, resp.StatusCode)
 		time.Sleep(time.Second * 60)
-		cacheSkin("69e226c8-cdff-431c-9be0-8955a412fc88")
+		cacheSkin(uuid)
 		time.Sleep(time.Second * 45)
 	}
 	return nil
