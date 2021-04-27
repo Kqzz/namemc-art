@@ -18,4 +18,5 @@ Tool used to generate (and apply; on the todo list) skin art to NameMC profiles.
 example(s) of namemc skin art:
 
 - [uc2](https://mine.ly/uc2.4)
-- [Python](mine.ly/Python.1)
+- [Python](https://mine.ly/Python.1)
+- [Elektra](https://mine.ly/Elektra)
