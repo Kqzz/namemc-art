@@ -2,6 +2,8 @@
 
 Tool used to generate (and apply; on the todo list) skin art to NameMC profiles. It's designed to be as easy to use as possible and require minimal user input once running. 
 
+> default image.png is made by Tigi
+
 ## Usage
 
 > This will be updated to be much more user friendly
