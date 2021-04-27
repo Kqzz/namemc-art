@@ -21,10 +21,6 @@ checksum:
   name_template: 'checksums.txt'
 snapshot:
   name_template: "{{ .Tag }}-next"
-  release:
-          #     github:
-          #         owner: kqzz
-          #         name: namemc-art
 changelog:
   sort: asc
   filters:
