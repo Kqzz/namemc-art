@@ -82,6 +82,7 @@ func placeFacesOnSkin(faces []image.Image) ([]image.Image, error) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	baseSkin = imaging.Paste(baseSkin, image.NewRGBA(image.Rectangle{image.Point{0, 0}, image.Point{8, 8}}), image.Point{40, 8})
 	for _, face := range faces {
 		baseImage := baseSkin
 		toAppend := imaging.Paste(baseImage, face, image.Point{X: 8, Y: 8})
