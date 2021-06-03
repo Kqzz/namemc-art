@@ -2,12 +2,14 @@ package main
 
 import (
 	"bytes"
+	"crypto/tls"
 	"fmt"
 	"image"
 	"image/png"
 	"log"
 	"mime/multipart"
 	"net/http"
+	"net/http/cookiejar"
 	"time"
 )
 
@@ -42,8 +44,26 @@ func newImageUploadRequest(uri string, params map[string]string, paramName strin
 	return request, nil
 }
 
+func firefoxClient() *http.Client {
+	cipherSuites := []uint16{
+		0x1301, 0x1303, 0x1302, 0xc02b, 0xc02f, 0xcca9, 0xcca8, 0xc02c, 0xc030, 0xc00a, 0xc009, 0xc013, 0xc014, 0x009c, 0x009d, 0x002f, 0x0035, 0x000a,
+	}
+
+	cookieJar, err := cookiejar.New(nil)
+	if err != nil {
+		panic(err)
+	}
+
+	tlsConfig := &tls.Config{CipherSuites: cipherSuites, MaxVersion: tls.VersionTLS12}
+	client := &http.Client{Transport: &http.Transport{TLSClientConfig: tlsConfig}, Jar: cookieJar}
+
+	return client
+}
+
+
 func cacheSkin(uuid string) {
-	_, err := http.Get(fmt.Sprintf("https://namemc.com/profile/%v", uuid))
+	client := firefoxClient()
+	_, err := client.Get(fmt.Sprintf("https://namemc.com/profile/%v", uuid))
 	if err != nil {
 		log.Fatal(err)
 	}
