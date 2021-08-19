@@ -1,5 +1,7 @@
 # NameMC skin art tool
 
+## I'm pretty sure this is broken because of namemc request blocking
+
 Tool used to generate (and apply; on the todo list) skin art to NameMC profiles. It's designed to be as easy to use as possible and require minimal user input once running. 
 
 > default image.png is made by Tigi
