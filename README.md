@@ -1,6 +1,8 @@
 # NameMC skin art tool
 
-## I'm pretty sure this is broken because of namemc request blocking
+## Tool is broken due to namemc request blocking, but still functions if you manually refresh your NameMC profile in between each skin application
+![image](https://github.com/Kqzz/namemc-art/assets/48300938/1c128227-666f-45d6-920d-8cae022d27ef)
+
 
 Tool used to generate (and apply; on the todo list) skin art to NameMC profiles. It's designed to be as easy to use as possible and require minimal user input once running. 
 
